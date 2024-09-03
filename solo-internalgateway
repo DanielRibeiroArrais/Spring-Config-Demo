@@ -1,0 +1,62 @@
+---
+Logging:
+  LogLevel:
+    Default: Information
+    Microsoft.AspNetCore: Warning
+
+AllowedHosts: "*"
+
+Jwt:
+  AllowedAudiences:
+    CloudSailorApis: cloudsailor
+  Issuers:
+  - https://keycloak.k8s-solo.com.br/realms/solonetwork
+  - https://keycloak.k8s-solo.com.br/realms/empresacliente1
+  Keys:
+  - alg: RS256
+    kid: JDcz80opCWEkEhvb7HpGqhRUUbQ0TERnTZCtMRJ6M-8
+    e: AQAB
+    kty: RSA
+    n: vghC_pxOQVPjpxv6uFOyxiiDaABS-gmttx6GJgtOxa4hGF-wnVSsV35vQilX0pDLydI6M30I3Xp972PEPn0XwcSMUw-kXHDsDfNaBjkQ3VGnAphRbv3q-Fy81cDQG_6Pdg7qXu1nOoVLhtuGkxGgaPNi_4HJ8AZH-I1mP4aXgz4fBSgZwdXco8tICm3P3x62nfnB7G2B9Fmf6iSIEm69LIdlnmyD2EvKC-B-vAHCmR-AUJNTuHj3UwSU-DhlD_1TuHjzWoMsne3UeyFozXhnBUuqnldY-hscyEA_08mJZ_r-fkVWsCJWVNjqiE1NlI8SCoe_BfMEQF44Icn274Ah-w
+    use: ''
+    x5t: ''
+    x5c: ''
+  - alg: RS256
+    kid: 3F_cSBgpBluS22dRPwKpHoNl-OXlnluUx9ixA1NBQx0
+    e: AQAB
+    kty: RSA
+    n: qvbuX43wJiRxHFrbeBysl0C_1wLGYSGW8Z77EcA6IpfDJV7007vlJ-WDVMtfiaZ2IAxL7gi0-QZMxl_BD3vl48HdBuS5y8thgmUz9TyHdex38RvTSfmmJNaMpy9ofW3SSfK2YberKeP_9vbh8e9k0nt8IQVx75xq6Jk2LNZ5z7B1MADmwiKlaiZ508yO3twJQvuT2Q9iKHlHgpm-JJnwHSn66i92ootbCNwZGuJcBJA9BE0odwKwJYiVRfxrjDJwqmCYmGq-__smtL0OVLQ3BzIMKj9R3M0MlgOsjwKRVgZiYSoC4gTfBdAn4XC5KKhW72srHAGhXAy7F5Mo0Juz0Q
+    use: ''
+    x5t: ''
+    x5c: ''
+
+GlobalConfiguration:
+  BaseUrl: https://localhost:9000
+
+Routes:
+- UpstreamPathTemplate: "/users"
+  UpstreamHttpMethod:
+  - GET
+  DownstreamPathTemplate: "/users"
+  DownstreamScheme: https
+  DownstreamHostAndPorts:
+  - Host: jsonplaceholder.typicode.com
+    Port: 443
+- UpstreamPathTemplate: "/azurepricing/disk"
+  UpstreamHttpMethod:
+  - GET
+  DownstreamPathTemplate: "/api/azurepricing/disk"
+  DownstreamScheme: https
+  DownstreamHostAndPorts:
+  - Host: csazurepricingfunction.azurewebsites.net
+    Port: 443
+- UpstreamPathTemplate: "/v1/cloudsailor/{everything}"
+  UpstreamHttpMethod:
+  - GET
+  DownstreamPathTemplate: "/{everything}"
+  DownstreamScheme: https
+  DownstreamHostAndPorts:
+  - Host: cloudsailor-mock-mockintosh-dev.k8s-solo.com.br
+    Port: 443
+  AuthenticationOptions:
+    AuthenticationProviderKey: CloudSailorApis
