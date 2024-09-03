@@ -58,5 +58,3 @@ Routes:
   DownstreamHostAndPorts:
   - Host: cloudsailor-mock-mockintosh-dev.k8s-solo.com.br
     Port: 443
-  AuthenticationOptions:
-    AuthenticationProviderKey: CloudSailorApis
